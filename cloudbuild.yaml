@@ -5,6 +5,13 @@ steps:
   # Build docker image
   - name: 'us-docker.pkg.dev/cloud-builders/ga/v1/docker'
     args: ['build', '-t', 'us-docker.pkg.dev/$PROJECT_ID/appengine/default.version-12345', '.']
+  
+  - name: gcr.io/cloud-builders/gcloud
+    entrypoint: '/bin/bash'
+    args:
+      - '-c'
+      - |-
+        gcloud artifacts docker images describe us-docker.pkg.dev/drewroen-sandbox/appengine/default.version-12345:latest --show-provenance
 
 timeout: 1200s
 
