@@ -9,4 +9,11 @@ steps:
   - name: 'golang:stretch'
     entrypoint: 'go'
     args: ['install', 'github.com/slsa-framework/slsa-verifier/v2/cli/slsa-verifier@v2.0.1']
+    
+  - name: gcr.io/cloud-builders/gcloud
+    entrypoint: '/bin/bash'
+    args:
+      - '-c'
+      - |-
+        slsa-verifier version
 timeout: 1200s
