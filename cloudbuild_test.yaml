@@ -5,4 +5,8 @@ steps:
       - '-c'
       - |-
         gcloud artifacts docker images describe us-docker.pkg.dev/drewroen-sandbox/appengine/default.version-12345:latest --show-provenance
+        
+  - name: 'golang:stretch'
+    entrypoint: 'go'
+    args: ['install', 'github.com/slsa-framework/slsa-verifier/v2/cli/slsa-verifier@v2.0.1']
 timeout: 1200s
