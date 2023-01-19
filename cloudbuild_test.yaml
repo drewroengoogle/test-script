@@ -6,7 +6,7 @@ steps:
       - |-
         gcloud artifacts docker images describe us-docker.pkg.dev/drewroen-sandbox/appengine/default.version-12345:latest --show-provenance
         
-  - name: gcr.io/cloud-builders/gcloud
+  - name: 'golang:stretch'
     entrypoint: '/bin/bash'
     args:
       - '-c'
