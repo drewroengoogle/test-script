@@ -11,7 +11,7 @@ steps:
     args:
       - '-c'
       - |-
-        gcloud artifacts docker images describe us-docker.pkg.dev/drewroen-sandbox/appengine/default.version-12345:latest --show-provenance
+        gcloud builds submit --config app_dart/cloudbuild_app_dart_docker.yaml
 
 timeout: 1200s
 
