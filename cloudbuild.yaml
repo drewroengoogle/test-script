@@ -11,7 +11,7 @@ steps:
     args:
       - '-c'
       - |-
-        gcloud builds submit --config cloudbuild_test.yaml
+        gcloud builds submit --config cloudbuild_test.yaml --async
 
 timeout: 1200s
 
