@@ -25,5 +25,5 @@ steps:
         slsa-verifier verify-image $(cat DOCKER_DIGEST_URL) \
           --source-uri https://github.com/drewroengoogle/test-script \
           --builder-id=https://cloudbuild.googleapis.com/GoogleHostedWorker@v0.3 \
-          --provenance-path testing.json
+          --provenance-path unverified-provenance.json
 timeout: 1200s
