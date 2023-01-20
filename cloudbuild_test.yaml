@@ -23,7 +23,7 @@ steps:
         go install github.com/slsa-framework/slsa-verifier/v2/cli/slsa-verifier@v2.0.1
         slsa-verifier version
         slsa-verifier verify-image $(cat DOCKER_DIGEST_URL) \
-          --source-uri https://github.com/drewroengoogle/test-script \
+          --source-uri https://github.com/drewroengoogle/test-script2 \
           --builder-id=https://cloudbuild.googleapis.com/GoogleHostedWorker@v0.3 \
           --provenance-path unverified-provenance.json
 timeout: 1200s
