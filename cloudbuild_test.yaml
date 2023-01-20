@@ -5,8 +5,12 @@ steps:
       - '-c'
       - |-
         gcloud artifacts docker images describe \
-        us-docker.pkg.dev/drewroen-sandbox/appengine/default.version-12345:latest \
-        --show-provenance --format json > unverified-provenance.json
+          us-docker.pkg.dev/drewroen-sandbox/appengine/default.version-12345:latest \
+          --show-provenance --format json > unverified-provenance.json
+        DOCKER_DIGEST= \
+          $(gcloud artifacts docker images describe \
+          us-docker.pkg.dev/drewroen-sandbox/appengine/default.version-12345:latest \
+          | grep fully_qualified_digest | cut -c 27-)
         
   - name: 'golang:stretch'
     entrypoint: '/bin/bash'
@@ -14,6 +18,11 @@ steps:
       - '-c'
       - |-
         ls
+        echo $DOCKER_DIGEST
         go install github.com/slsa-framework/slsa-verifier/v2/cli/slsa-verifier@v2.0.1
         slsa-verifier version
+        slsa-verifier verify-image $DOCKER_DIGEST \
+          --source-uri https://github.com/drewroengoogle/test-script \
+          --builder-id=https://cloudbuild.googleapis.com/GoogleHostedWorker@v0.3 \
+          --provenance-path testing.json
 timeout: 1200s
