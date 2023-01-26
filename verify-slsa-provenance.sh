@@ -5,16 +5,6 @@
 
 set -e
 
-gcloud artifacts docker images describe \
-  us-docker.pkg.dev/drewroen-sandbox/appengine/default.version-12345:latest \
-  --show-provenance --format json \
-  > unverified-provenance.json
-gcloud artifacts docker images describe \
-  us-docker.pkg.dev/drewroen-sandbox/appengine/default.version-12345:latest \
-   | grep fully_qualified_digest \
-   | cut -c 27- \
-   > DOCKER_DIGEST_URL
-
 echo "Installing slsa-verifier..."
 go install github.com/slsa-framework/slsa-verifier/v2/cli/slsa-verifier@v2.0.1
 
