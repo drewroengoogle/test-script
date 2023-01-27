@@ -11,7 +11,10 @@ steps:
     args:
       - '-c'
       - |-
-        gcloud builds submit --config cloudbuild_test.yaml --async
+        gcloud builds submit \
+          --config cloudbuild_test.yaml \
+          --substitutions="SHORT_SHA=$SHORT_SHA" \
+          --async
 
 timeout: 1200s
 
