@@ -15,5 +15,5 @@ steps:
     args:
       - '-c'
       - |-
-        bash cloud_build/verify-slsa-provenance.sh $PROJECT_ID $SHORT_SHA
+        bash verify-slsa-provenance.sh $PROJECT_ID $SHORT_SHA
 timeout: 1200s
