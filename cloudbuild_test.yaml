@@ -4,6 +4,8 @@ steps:
     args:
       - '-c'
       - |-
+        echo $PROJECT_ID
+        echo $SHORT_SHA
         gcloud artifacts docker images describe \
           us-docker.pkg.dev/drewroen-sandbox/appengine/default.version-12345:latest \
           --show-provenance --format json \
