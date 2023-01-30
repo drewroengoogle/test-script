@@ -9,10 +9,11 @@ steps:
           --show-provenance --format json \
           > unverified-provenance.json
         echo us-docker.pkg.dev/$PROJECT_ID/appengine/default.version-$SHORT_SHA:latest
-        DOCKER_DIGEST_URL=$(gcloud artifacts docker images describe \
+        gcloud artifacts docker images describe \
           us-docker.pkg.dev/drewroen-sandbox/appengine/default.version-12345:latest \
            | grep fully_qualified_digest \
-           | cut -c 27-)
+           | cut -c 27- \
+           > DOCKER_DIGEST_URL
         
   - name: 'golang:stretch'
     entrypoint: '/bin/bash'
@@ -20,7 +21,7 @@ steps:
       - '-c'
       - |-
         echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-        echo $DOCKER_DIGEST_URL
+        echo $(cat DOCKER_DIGEST_URL)
         echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-        bash verify-slsa-provenance.sh $PROJECT_ID $SHORT_SHA $DOCKER_DIGEST_URL
+        bash verify-slsa-provenance.sh $PROJECT_ID $SHORT_SHA $DOCKER_DIGEST_URL $(cat DOCKER_DIGEST_URL)
 timeout: 1200s
