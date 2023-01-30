@@ -5,6 +5,11 @@
 
 set -e
 
+echo "Installing jq using curl..."
+curl -sLo jq \
+  "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64" \
+  && chmod +x jq
+
 echo "Installing slsa-verifier..."
 go install github.com/slsa-framework/slsa-verifier/v2/cli/slsa-verifier@v2.0.1
 
@@ -14,7 +19,10 @@ go install github.com/slsa-framework/slsa-verifier/v2/cli/slsa-verifier@v2.0.1
 # "builder-id" is where the artifact was built (Note: GoogleHostedWorker is
 # a GCP Cloud Build instance)
 echo "Verifying the provenance is valid and correct..."
-slsa-verifier verify-image $1 \
+FULLY_QUALIFIED_DIGEST= \
+  $(cat unverified-provenance.json | \
+  ./jq -r .image_summary.fully_qualified_digest)
+slsa-verifier verify-image \ $FULLY_QUALIFIED_DIGEST \
   --source-uri https://github.com/drewroengoogle/test-script \
   --builder-id=https://cloudbuild.googleapis.com/GoogleHostedWorker@v0.3 \
   --provenance-path unverified-provenance.json
