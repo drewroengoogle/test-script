@@ -19,6 +19,7 @@ go install github.com/slsa-framework/slsa-verifier/v2/cli/slsa-verifier@v2.0.1
 # "builder-id" is where the artifact was built (Note: GoogleHostedWorker is
 # a GCP Cloud Build instance)
 echo "Verifying the provenance is valid and correct..."
+ls
 FULLY_QUALIFIED_DIGEST= \
   $(cat unverified-provenance.json | \
   ./jq -r .image_summary.fully_qualified_digest)
