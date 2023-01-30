@@ -4,7 +4,9 @@ steps:
     args:
       - '-c'
       - |-
-        apt-get install jq -y
+        curl -sLo jq                                                     \
+          "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64" \
+          && chmod +x jq
         jq
         gcloud artifacts docker images describe \
           us-docker.pkg.dev/$PROJECT_ID/appengine/default.version-$SHORT_SHA:latest \
