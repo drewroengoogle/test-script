@@ -4,6 +4,7 @@ steps:
     args:
       - '-c'
       - |-
+        jq
         gcloud artifacts docker images describe \
           us-docker.pkg.dev/$PROJECT_ID/appengine/default.version-$SHORT_SHA:latest \
           --show-provenance --format json \
