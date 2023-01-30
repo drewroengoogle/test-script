@@ -4,6 +4,7 @@ steps:
     args:
       - '-c'
       - |-
+        apt-get install jq -y
         jq
         gcloud artifacts docker images describe \
           us-docker.pkg.dev/$PROJECT_ID/appengine/default.version-$SHORT_SHA:latest \
