@@ -18,7 +18,7 @@ steps:
           --show-provenance --format json \
           > unverified-provenance.json
         gcloud artifacts docker images describe \
-          us-docker.pkg.dev/$PROJECT_ID/appengine/default.version-$SHORT_SHA:latest \
+          us-docker.pkg.dev/$PROJECT_ID/appengine/default.version-$SHORT_SHA:latest --format json \
            | ./jq -r .image_summary.fully_qualified_digest \
            > DOCKER_DIGEST_URL
         cat DOCKER_DIGEST_URL
