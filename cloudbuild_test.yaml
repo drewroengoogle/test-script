@@ -4,20 +4,17 @@ steps:
     args:
       - '-c'
       - |-
-        curl -sLo jq "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64" && chmod +x jq
         gcloud artifacts docker images describe \
           us-docker.pkg.dev/$PROJECT_ID/appengine/default.version-$SHORT_SHA:latest \
           --show-provenance --format json \
           > unverified-provenance.json
-        gcloud artifacts docker images describe \
-          us-docker.pkg.dev/$PROJECT_ID/appengine/default.version-$SHORT_SHA:latest --format json \
-           | ./jq -r .image_summary.fully_qualified_digest \
-           > DOCKER_DIGEST_URL
         
   - name: 'golang:stretch'
     entrypoint: '/bin/bash'
     args:
       - '-c'
       - |-
+        curl -sLo jq "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64" && chmod +x jq
+        DOCKER_DIGEST_URL=$(cat unverified-provenance.json | ./jq -r .image_summary.fully_qualified_digest)
         bash verify-slsa-provenance.sh $PROJECT_ID $SHORT_SHA $(cat DOCKER_DIGEST_URL)
 timeout: 1200s
