@@ -16,5 +16,7 @@ steps:
       - |-
         curl -sLo jq "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64" && chmod +x jq
         DOCKER_DIGEST_URL=$(cat unverified-provenance.json | ./jq -r .image_summary.fully_qualified_digest)
-        bash verify-slsa-provenance.sh $PROJECT_ID $SHORT_SHA $(cat DOCKER_DIGEST_URL)
+        echo $DOCKER_DIGEST_URL
+        echo "~~~~~~~~~~~~~~"
+        bash verify-slsa-provenance.sh $PROJECT_ID $SHORT_SHA $DOCKER_DIGEST_URL
 timeout: 1200s
