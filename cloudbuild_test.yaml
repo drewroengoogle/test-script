@@ -4,10 +4,15 @@ steps:
     args:
       - '-c'
       - |-
+        echo "Downloading jq"
         curl -sLo jq                                                     \
           "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64" \
           && chmod +x jq
-        jq
+        echo "Downloaded jq"
+        echo "~~~~~~~~~~~~~~~"
+        ls
+        echo "~~~~~~~~~~~~~~~"
+        ./jq
         gcloud artifacts docker images describe \
           us-docker.pkg.dev/$PROJECT_ID/appengine/default.version-$SHORT_SHA:latest \
           --show-provenance --format json \
