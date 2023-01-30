@@ -13,7 +13,6 @@ steps:
           us-docker.pkg.dev/$PROJECT_ID/appengine/default.version-$SHORT_SHA:latest --format json \
            | ./jq -r .image_summary.fully_qualified_digest \
            > DOCKER_DIGEST_URL
-        cat DOCKER_DIGEST_URL
         
   - name: 'golang:stretch'
     entrypoint: '/bin/bash'
