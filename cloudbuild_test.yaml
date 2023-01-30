@@ -19,9 +19,9 @@ steps:
           > unverified-provenance.json
         gcloud artifacts docker images describe \
           us-docker.pkg.dev/$PROJECT_ID/appengine/default.version-$SHORT_SHA:latest \
-           | grep fully_qualified_digest \
-           | cut -c 27- \
+           | ./jq -r .image_summary.fully_qualified_digest \
            > DOCKER_DIGEST_URL
+        cat DOCKER_DIGEST_URL
         
   - name: 'golang:stretch'
     entrypoint: '/bin/bash'
