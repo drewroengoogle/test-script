@@ -8,9 +8,8 @@ steps:
           us-docker.pkg.dev/$PROJECT_ID/appengine/default.version-$SHORT_SHA:latest \
           --show-provenance --format json \
           > unverified-provenance.json
-        echo us-docker.pkg.dev/$PROJECT_ID/appengine/default.version-$SHORT_SHA:latest
         gcloud artifacts docker images describe \
-          us-docker.pkg.dev/drewroen-sandbox/appengine/default.version-12345:latest \
+          us-docker.pkg.dev/$PROJECT_ID/appengine/default.version-$SHORT_SHA:latest \
            | grep fully_qualified_digest \
            | cut -c 27- \
            > DOCKER_DIGEST_URL
@@ -23,5 +22,5 @@ steps:
         echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
         echo $(cat DOCKER_DIGEST_URL)
         echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-        bash verify-slsa-provenance.sh $PROJECT_ID $SHORT_SHA $DOCKER_DIGEST_URL $(cat DOCKER_DIGEST_URL)
+        bash verify-slsa-provenance.sh $PROJECT_ID $SHORT_SHA $(cat DOCKER_DIGEST_URL)
 timeout: 1200s
