@@ -19,6 +19,8 @@ steps:
     args:
       - '-c'
       - |-
+        echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
         echo $DOCKER_DIGEST_URL
+        echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
         bash verify-slsa-provenance.sh $PROJECT_ID $SHORT_SHA $DOCKER_DIGEST_URL
 timeout: 1200s
