@@ -23,7 +23,7 @@ ls
 FULLY_QUALIFIED_DIGEST= \
   $(cat unverified-provenance.json | \
   ./jq -r .image_summary.fully_qualified_digest)
-slsa-verifier verify-image \ $FULLY_QUALIFIED_DIGEST \
+slsa-verifier verify-image $FULLY_QUALIFIED_DIGEST \
   --source-uri https://github.com/drewroengoogle/test-script \
   --builder-id=https://cloudbuild.googleapis.com/GoogleHostedWorker@v0.3 \
   --provenance-path unverified-provenance.json
