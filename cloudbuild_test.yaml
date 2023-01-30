@@ -4,15 +4,7 @@ steps:
     args:
       - '-c'
       - |-
-        echo "Downloading jq"
-        curl -sLo jq                                                     \
-          "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64" \
-          && chmod +x jq
-        echo "Downloaded jq"
-        echo "~~~~~~~~~~~~~~~"
-        ls
-        echo "~~~~~~~~~~~~~~~"
-        ./jq
+        curl -sLo jq "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64" && chmod +x jq
         gcloud artifacts docker images describe \
           us-docker.pkg.dev/$PROJECT_ID/appengine/default.version-$SHORT_SHA:latest \
           --show-provenance --format json \
@@ -28,8 +20,5 @@ steps:
     args:
       - '-c'
       - |-
-        echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-        echo $(cat DOCKER_DIGEST_URL)
-        echo "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
         bash verify-slsa-provenance.sh $PROJECT_ID $SHORT_SHA $(cat DOCKER_DIGEST_URL)
 timeout: 1200s
