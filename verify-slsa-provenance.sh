@@ -15,7 +15,7 @@ go install github.com/slsa-framework/slsa-verifier/v2/cli/slsa-verifier@v2.0.1
 # a GCP Cloud Build instance)
 echo "Verifying the provenance is valid and correct..."
 slsa-verifier verify-image $3 \
-  --source-uri https://github.com/flutter/cocoon \
+  --source-uri https://github.com/drewroengoogle/test-script \
   --builder-id=https://cloudbuild.googleapis.com/GoogleHostedWorker@v0.3 \
   --provenance-path unverified-provenance.json
 
