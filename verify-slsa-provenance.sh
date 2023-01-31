@@ -12,7 +12,7 @@ apt update && apt install jq=1.5+dfsg-1.3 -y
 
 # Download slsa-verifier in order to validate the docker image provenance.
 echo "Installing slsa-verifier using go..."
-go install github.com/slsa-framework/slsa-verifier/v2/cli/slsa-verifier@v2.0.1
+go install github.com/slsa-framework/slsa-verifier/v2/cli/slsa-verifier@a43888265e1f6aae98c924538298944f2721dcf0
 
 # This command uses slsa-verifier to ensure the provenance has the correct
 # source location and builder.
