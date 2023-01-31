@@ -8,9 +8,7 @@ set -e
 # Download the jq binary in order to obtain the artifact registry url from the
 # docker image provenance.
 echo "Installing jq using curl..."
-curl -Lo jq \
-  "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64" \
-  && chmod +x jq
+apt update && apt install jq -y
 
 # Download slsa-verifier in order to validate the docker image provenance.
 echo "Installing slsa-verifier using go..."
