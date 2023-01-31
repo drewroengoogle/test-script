@@ -8,7 +8,7 @@ set -e
 # Download the jq binary in order to obtain the artifact registry url from the
 # docker image provenance.
 echo "Installing jq using curl..."
-apt update && apt install jq=1.5+dfsg-2 -y
+apt update && apt install jq=1.6-2.1 -y
 
 # Download slsa-verifier in order to validate the docker image provenance.
 echo "Installing slsa-verifier using go..."
