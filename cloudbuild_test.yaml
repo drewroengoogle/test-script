@@ -14,5 +14,5 @@ steps:
     args:
       - '-c'
       - |-
-        ./verify-slsa-provenance.sh
+        bash verify-slsa-provenance.sh
 timeout: 1200s
