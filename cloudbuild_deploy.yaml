@@ -13,5 +13,5 @@ steps:
     args:
       - '-c'
       - |-
-        scripts/verify_slsa_provenance.sh unverified_provenance.json
+        scripts/verify_provenance.sh unverified_provenance.json
 timeout: 1200s
