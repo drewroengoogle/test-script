@@ -4,7 +4,7 @@ steps:
     args:
       - '-c'
       - |-
-        get_docker_image_provenance.sh \
+        bash get_docker_image_provenance.sh \
           us-docker.pkg.dev/$PROJECT_ID/appengine/default.version-$SHORT_SHA:latest \
           unverified_provenance.json
 
