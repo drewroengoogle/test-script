@@ -4,7 +4,7 @@ steps:
     args:
       - '-c'
       - |-
-        bash get_docker_image_provenance.sh \
+        scripts/get_docker_image_provenance.sh \
           us-docker.pkg.dev/$PROJECT_ID/appengine/default.version-$SHORT_SHA:latest \
           unverified_provenance.json
 
@@ -13,5 +13,5 @@ steps:
     args:
       - '-c'
       - |-
-        verify_slsa_provenance.sh unverified_provenance.json
+        scripts/verify_slsa_provenance.sh unverified_provenance.json
 timeout: 1200s
