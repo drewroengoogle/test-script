@@ -5,14 +5,14 @@ steps:
   # Build docker image
   - name: 'us-docker.pkg.dev/cloud-builders/ga/v1/docker'
     args: ['build', '-t', 'us-docker.pkg.dev/$PROJECT_ID/appengine/default.version-$SHORT_SHA', '.']
-  
+
   - name: gcr.io/cloud-builders/gcloud
     entrypoint: '/bin/bash'
     args:
       - '-c'
       - |-
         gcloud builds submit \
-          --config cloudbuild_test.yaml \
+          --config cloudbuild_deploy.yaml \
           --substitutions="SHORT_SHA=$SHORT_SHA" \
           --async
 

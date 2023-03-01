@@ -4,15 +4,14 @@ steps:
     args:
       - '-c'
       - |-
-        gcloud artifacts docker images describe \
+        get_docker_image_provenance.sh \
           us-docker.pkg.dev/$PROJECT_ID/appengine/default.version-$SHORT_SHA:latest \
-          --show-provenance --format json \
-          > unverified-provenance.json
-        
+          unverified_provenance.json
+
   - name: 'golang:stretch'
     entrypoint: '/bin/bash'
     args:
       - '-c'
       - |-
-        bash verify-slsa-provenance.sh
+        verify_slsa_provenance.sh unverified_provenance.json
 timeout: 1200s
