@@ -4,7 +4,7 @@
 # found in the LICENSE file.
 
 # This script is used to pull a docker image's provenance and save it to a file.
-DOCKER_IMAGE_URL=$(1)123
+DOCKER_IMAGE_URL=$1
 OUTPUT_DIRECTORY=$2
 # Getting the docker image provenance can be flaky, so retry up to 3 times.
 MAX_ATTEMPTS=3
