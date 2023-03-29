@@ -8,7 +8,7 @@
 # legitimate, then the script will exit with a non-zero exit code.
 PROVENANCE_PATH=$1
 BUILDER_ID=https://cloudbuild.googleapis.com/GoogleHostedWorker@v0.3
-SOURCE_URI=https://github.com/drewroengoogle/test-script
+SOURCE_URI=https://github.com/flutter/cocoon
 
 # Download the jq binary in order to obtain the artifact registry url from the
 # docker image provenance.
@@ -45,8 +45,7 @@ slsa-verifier verify-image $FULLY_QUALIFIED_DIGEST \
 # will eventually be generated for all builds.
 COMMAND_RESULT=$?
 if [[ $COMMAND_RESULT -eq 0 ]]; then
-  echo "Provenance verified!"
-  break
+  echo "Provenance verified!" && exit $COMMAND_RESULT
 fi
 
 echo "Verifying the provenance is valid and correct..."
@@ -58,8 +57,7 @@ slsa-verifier verify-image $FULLY_QUALIFIED_DIGEST \
 
 COMMAND_RESULT=$?
 if [[ $COMMAND_RESULT -eq 0 ]]; then
-  echo "Provenance verified!"
-  break
+  echo "Provenance verified!" && exit $COMMAND_RESULT
 fi
 
 echo "Failed to validate provenance." && exit $COMMAND_RESULT
