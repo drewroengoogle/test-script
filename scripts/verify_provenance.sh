@@ -8,7 +8,7 @@
 # legitimate, then the script will exit with a non-zero exit code.
 PROVENANCE_PATH=$1
 BUILDER_ID=https://cloudbuild.googleapis.com/GoogleHostedWorker@v0.3
-SOURCE_URI=https://github.com/drewroengoogle/test-script
+SOURCE_URI=https://github.com/drewroengoogle/test-script2
 
 # Download the jq binary in order to obtain the artifact registry url from the
 # docker image provenance.
