@@ -36,7 +36,7 @@ FULLY_QUALIFIED_DIGEST=$(cat $PROVENANCE_PATH |
 echo "Verifying the provenance is valid and correct..."
 echo "Checking for source-uri of https://github.com/flutter/cocoon"
 slsa-verifier verify-image $FULLY_QUALIFIED_DIGEST \
-  --source-uri $SOURCE_URI \
+  --source-uri git+$SOURCE_URI \
   --builder-id=$BUILDER_ID \
   --provenance-path $PROVENANCE_PATH
 
@@ -51,7 +51,7 @@ fi
 echo "Verifying the provenance is valid and correct..."
 echo "Checking for source-uri of git+https://github.com/flutter/cocoon"
 slsa-verifier verify-image $FULLY_QUALIFIED_DIGEST \
-  --source-uri git+$SOURCE_URI \
+  --source-uri $SOURCE_URI \
   --builder-id=$BUILDER_ID \
   --provenance-path $PROVENANCE_PATH
 
