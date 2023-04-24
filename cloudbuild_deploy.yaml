@@ -8,7 +8,7 @@ steps:
           us-docker.pkg.dev/$PROJECT_ID/appengine/default.version-$SHORT_SHA:latest \
           unverified_provenance.json
 
-  - name: 'golang:stretch'
+  - name: 'golang'
     entrypoint: '/bin/bash'
     args:
       - '-c'
