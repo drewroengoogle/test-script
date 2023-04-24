@@ -13,7 +13,7 @@ SOURCE_URI=https://github.com/drewroengoogle/test-script2
 # Download the jq binary in order to obtain the artifact registry url from the
 # docker image provenance.
 echo "Installing jq using apt..."
-apt install -y jq
+sudo apt-get install jq
 
 # Download slsa-verifier in order to validate the docker image provenance.
 # This takes the version of slsa-verifier defined in tooling/go.mod.
