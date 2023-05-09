@@ -2,7 +2,7 @@ module test-script-tooling
 
 go 1.18
 
-require github.com/slsa-framework/slsa-verifier/v2 v2.1.0
+require github.com/slsa-framework/slsa-verifier/v2 v2.2.0
 
 require (
 	cloud.google.com/go/compute v1.15.1 // indirect
