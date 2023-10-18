@@ -14,15 +14,13 @@ steps:
         echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null;
         apt update && apt install -y gh;
 
-        echo $_GH_PAT_TOKEN
         echo "Try and get the token now"
-        echo $_GH_PAT_TOKEN > token
-        echo 
+        echo $$GH_PAT_TOKEN > token
         gh auth login --with-token < token
         gh pr comment 5 --body "Test" --repo drewroengoogle/test-script
-    secretEnv: ['_GH_PAT_TOKEN']
+    secretEnv: ['GH_PAT_TOKEN']
 availableSecrets:
   secretManager:
-  - versionName: projects/217988924111/secrets/gh_token_comment/versions/1
-    env: '_GH_PAT_TOKEN'
+  - versionName: projects/drewroen-sandbox/secrets/gh_token_comment/versions/latest
+    env: 'GH_PAT_TOKEN'
 timeout: 1200s
