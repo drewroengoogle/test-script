@@ -13,6 +13,12 @@ steps:
         curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg;
         echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null;
         apt update && apt install -y gh;
+        echo $GH_PAT_TOKEN > TOKEN_FILE
+        gh auth login --with-token < TOKEN_FILE
         gh pr comment 5 --body "Test" --repo drewroengoogle/test-script
-
+    secretEnv: ['GH_PAT_TOKEN']
+availableSecrets:
+  secretManager:
+  - versionName: projects/217988924111/secrets/gh_token_comment/versions/1
+    env: 'GH_PAT_TOKEN'
 timeout: 1200s
