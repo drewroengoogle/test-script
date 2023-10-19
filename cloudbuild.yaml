@@ -2,6 +2,15 @@
 # dashboard docker image to artifact registry.
 
 steps:
+  - name: gcr.io/cloud-builders/gcloud
+    entrypoint: '/bin/bash'
+    args:
+      - '-c'
+      - |-
+        echo $_PR_NUMBER
+        echo $_HEAD_BRANCH
+        echo $_BASE_BRANCH
+        echo $_HEAD_REPO_URL
   - name: gcr.io/$PROJECT_ID/firebase
     args: ['deploy', '--project=$PROJECT_ID', '--only=hosting']
   - name: gcr.io/cloud-builders/gcloud
