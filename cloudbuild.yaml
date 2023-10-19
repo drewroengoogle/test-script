@@ -25,7 +25,7 @@ steps:
         echo "Try and get the token now"
         echo $$GH_PAT_TOKEN > token
         gh auth login --with-token < token
-        gh pr comment 5 --body "Test" --repo drewroengoogle/test-script
+        gh pr comment $_PR_NUMBER --body "Deployed to: bla" --repo drewroengoogle/test-script
     secretEnv: ['GH_PAT_TOKEN']
 availableSecrets:
   secretManager:
