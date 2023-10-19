@@ -2,6 +2,8 @@
 # dashboard docker image to artifact registry.
 
 steps:
+  - name: gcr.io/drewroen-sandbox/firebase
+    args: ['deploy', '--project=drewroen-sandbox', '--only=hosting']
   - name: gcr.io/cloud-builders/gcloud
     entrypoint: '/bin/bash'
     args:
