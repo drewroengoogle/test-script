@@ -9,7 +9,11 @@ steps:
       - |-
         echo "Preview URL for commit $COMMIT_SHA: https://$PROJECT_ID-pr$_PR_NUMBER-$_HEAD_BRANCH.web.app"
   - name: gcr.io/$PROJECT_ID/firebase
-    args: ['hosting:channel:deploy', '--expires', '30m', '$PROJECT_ID-pr$_PR_NUMBER-$_HEAD_BRANCH', '--project=$PROJECT_ID']
+    entrypoint: '/bin/bash'
+    args:
+      - '-c'
+      - |-
+        firebase hosting:channel:deploy --expires 30m $PROJECT_ID-pr$_PR_NUMBER-$_HEAD_BRANCH --project=$PROJECT_ID
   - name: gcr.io/cloud-builders/gcloud
     entrypoint: '/bin/bash'
     args:
