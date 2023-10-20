@@ -3,12 +3,22 @@
 
 steps:
   - name: gcr.io/$PROJECT_ID/firebase
-    args: ['deploy', '--project=$PROJECT_ID', '--only=hosting']
+    entrypoint: '/bin/bash'
+    args:
+      - '-c'
+      - |-
+        firebase hosting:channel:deploy --expires 7d pr$_PR_NUMBER-$_HEAD_BRANCH --project=$PROJECT_ID
+        firebase hosting:channel:list --json > firebase_channels.json
   - name: gcr.io/cloud-builders/gcloud
     entrypoint: '/bin/bash'
     args:
       - '-c'
       - |-
+        echo "Installing jq using apt..."
+        apt update && apt install -y jq
+
+        STAGING_URL=$$(cat firebase_channels.json | jq '.result.channels[]|select(.url|contains("https://$PROJECT_ID--pr$_PR_NUMBER-$_HEAD_BRANCH")) | .url' -r)
+
         apt update && apt install -y \
         curl \
         gpg
@@ -19,8 +29,15 @@ steps:
         echo "Try and get the token now"
         echo $$GH_PAT_TOKEN > token
         gh auth login --with-token < token
-        gh pr comment 5 --body "Test" --repo drewroengoogle/test-script
+        gh pr comment $_PR_NUMBER \
+        --body \
+          "Visit the preview URL for this PR (updated for commit $COMMIT_SHA):
+
+          $$STAGING_URL" \
+        --repo drewroengoogle/test-script \
+        --edit-last
     secretEnv: ['GH_PAT_TOKEN']
+
 availableSecrets:
   secretManager:
   - versionName: projects/drewroen-sandbox/secrets/gh_token_comment/versions/latest
