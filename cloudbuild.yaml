@@ -34,14 +34,10 @@ steps:
         gh auth login --with-token < token
 
         echo "Commenting staging url on PR..."
-        gh pr comment $_PR_NUMBER \
-        --body \
-          "Visit the preview URL for this PR (updated for commit $COMMIT_SHA):
 
-          $$STAGING_URL" \
-        --repo drewroengoogle/test-script \
-        --edit-last
-    secretEnv: ['GH_PAT_TOKEN']
+        PR_BODY="Visit the preview URL for this PR (updated for commit $COMMIT_SHA):\n\n$$STAGING_URL"
+        gh pr comment $_PR_NUMBER --edit-last --body "$$PR_BODY" --repo drewroengoogle/test-script || \
+          gh pr comment $_PR_NUMBER --body "$$PR_BODY" --repo drewroengoogle/test-script
 
 availableSecrets:
   secretManager:
