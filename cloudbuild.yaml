@@ -33,8 +33,9 @@ steps:
         --body \
           "Visit the preview URL for this PR (updated for commit $COMMIT_SHA): \
           \
-          $$STAGING_URL"
-        --repo drewroengoogle/test-script
+          $$STAGING_URL" \
+        --repo drewroengoogle/test-script \
+        --edit-last
     secretEnv: ['GH_PAT_TOKEN']
 
 availableSecrets:
