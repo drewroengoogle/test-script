@@ -12,7 +12,7 @@ steps:
         echo "Installing jq using apt..."
         apt update && apt install -y jq
 
-        STAGING_URL=$(firebase hosting:channel:list --json | jq '.result.channels[]|select(.name|contains("drewroen-sandbox-pr7-new-branch")) | .url')
+        STAGING_URL=$$(firebase hosting:channel:list --json | jq '.result.channels[]|select(.name|contains("drewroen-sandbox-pr7-new-branch")) | .url')
 
         apt update && apt install -y \
         curl \
@@ -24,7 +24,7 @@ steps:
         echo "Try and get the token now"
         echo $$GH_PAT_TOKEN > token
         gh auth login --with-token < token
-        gh pr comment $_PR_NUMBER --body "Deployed to: $STAGING_URL" --repo drewroengoogle/test-script
+        gh pr comment $_PR_NUMBER --body "Deployed to: $$STAGING_URL" --repo drewroengoogle/test-script
     secretEnv: ['GH_PAT_TOKEN']
   # - name: gcr.io/cloud-builders/gcloud
   #   entrypoint: '/bin/bash'
