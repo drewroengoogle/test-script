@@ -17,8 +17,11 @@ steps:
         echo "Installing jq using apt..."
         apt update && apt install -y jq
 
+        echo "Obtaining staging url from hosting channel list"
         STAGING_URL=$$(cat firebase_channels.json | jq '.result.channels[]|select(.url|contains("https://$PROJECT_ID--pr$_PR_NUMBER-$_HEAD_BRANCH")) | .url' -r)
+        echo "Obtained staging url: $$STAGING_URL"
 
+        echo "Installing gh cli..."
         apt update && apt install -y \
         curl \
         gpg
@@ -26,9 +29,11 @@ steps:
         echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null;
         apt update && apt install -y gh;
 
-        echo "Try and get the token now"
+        echo "Logging into github under bot account..."
         echo $$GH_PAT_TOKEN > token
         gh auth login --with-token < token
+
+        echo "Commenting staging url on PR..."
         gh pr comment $_PR_NUMBER \
         --body \
           "Visit the preview URL for this PR (updated for commit $COMMIT_SHA):
