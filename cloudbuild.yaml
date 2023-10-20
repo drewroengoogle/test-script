@@ -8,11 +8,17 @@ steps:
       - '-c'
       - |-
         firebase hosting:channel:deploy --expires 7d pr$_PR_NUMBER-$_HEAD_BRANCH --project=$PROJECT_ID
-
+        firebase hosting:channel:list --json > firebase_channels.json
+    secretEnv: ['GH_PAT_TOKEN']
+  - name: gcr.io/cloud-builders/gcloud
+    entrypoint: '/bin/bash'
+    args:
+      - '-c'
+      - |-
         echo "Installing jq using apt..."
         apt update && apt install -y jq
 
-        STAGING_URL=$$(firebase hosting:channel:list --json | jq '.result.channels[]|select(.name|contains("drewroen-sandbox-pr7-new-branch")) | .url')
+        STAGING_URL=$$(cat firebase_channels.json | jq '.result.channels[]|select(.name|contains("drewroen-sandbox-pr7-new-branch")) | .url')
 
         apt update && apt install -y \
         curl \
@@ -25,12 +31,6 @@ steps:
         echo $$GH_PAT_TOKEN > token
         gh auth login --with-token < token
         gh pr comment $_PR_NUMBER --body "Deployed to: $$STAGING_URL" --repo drewroengoogle/test-script
-    secretEnv: ['GH_PAT_TOKEN']
-  # - name: gcr.io/cloud-builders/gcloud
-  #   entrypoint: '/bin/bash'
-  #   args:
-  #     - '-c'
-  #     - |-
 
 availableSecrets:
   secretManager:
