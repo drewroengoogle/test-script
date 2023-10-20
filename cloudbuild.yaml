@@ -31,8 +31,8 @@ steps:
         gh auth login --with-token < token
         gh pr comment $_PR_NUMBER \
         --body \
-          "Visit the preview URL for this PR (updated for commit $COMMIT_SHA): \
-          \
+          "Visit the preview URL for this PR (updated for commit $COMMIT_SHA):
+
           $$STAGING_URL" \
         --repo drewroengoogle/test-script \
         --edit-last
