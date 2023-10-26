@@ -49,4 +49,3 @@ availableSecrets:
   - versionName: projects/drewroen-sandbox/secrets/gh_token_comment/versions/latest
     env: 'GH_PAT_TOKEN'
 timeout: 1200s
-logsBucket: gs://drewroen-sandbox_cloudbuild/source
