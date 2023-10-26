@@ -51,3 +51,6 @@ availableSecrets:
 timeout: 1200s
 options:
   defaultLogsBucketBehavior: REGIONAL_USER_OWNED_BUCKET
+logsBucket: 'gs://github_staging_logs'
+options:
+  logging: GCS_ONLY
