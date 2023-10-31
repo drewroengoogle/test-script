@@ -10,18 +10,25 @@ steps:
 
   #       echo "Building the website using a makefile..."
   #       make build BUILD_CONFIGS=_config.yml,_config_stage.yml
-  - name: gcr.io/$PROJECT_ID/firebase
+  - name: gcr.io/cloud-builders/npm
     entrypoint: '/bin/bash'
     args:
       - '-c'
       - |-
         set -e
+        npm install -g firebase-tools
 
         echo "Deploying website to a staging channel on firebase..."
         FIREBASE_DEPLOY_RESPONSE=$(firebase hosting:channel:deploy --expires 7d pr$_PR_NUMBER-$_HEAD_BRANCH --project=$PROJECT_ID)
         FIREBASE_DEPLOY_URL=$(echo $$FIREBASE_DEPLOY_RESPONSE | grep -Eo "https://drewroen-sandbox--[a-zA-Z0-9./?=_%:-]*")
 
         echo "Deployed website to $$FIREBASE_DEPLOY_URL"
+  - name: gcr.io/cloud-builders/gcloud
+    entrypoint: '/bin/bash'
+    args:
+      - '-c'
+      - |-
+        set -e
 
         echo "Installing github cli (using instructions from https://github.com/cli/cli/blob/trunk/docs/install_linux.md#debian-ubuntu-linux-raspberry-pi-os-apt)..."
         apt update && apt install -y \
