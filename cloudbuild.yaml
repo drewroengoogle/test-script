@@ -19,24 +19,9 @@ steps:
 
         echo "Deploying website to a staging channel on firebase..."
         FIREBASE_DEPLOY_RESPONSE=$(firebase hosting:channel:deploy --expires 7d pr$_PR_NUMBER-$_HEAD_BRANCH --project=$PROJECT_ID)
-        echo $$FIREBASE_DEPLOY_RESPONSE
+        FIREBASE_DEPLOY_URL = $(echo $FIREBASE_DEPLOY_RESPONSE | grep -Eo "https://drewroen-sandbox--[a-zA-Z0-9./?=_%:-]*")
 
-        # echo "Saving list of channels to a local file..."
-        # firebase use default
-        firebase hosting:channel:list --json > firebase_channels.json
-  - name: gcr.io/cloud-builders/gcloud
-    entrypoint: '/bin/bash'
-    args:
-      - '-c'
-      - |-
-        set -e
-
-        echo "Installing jq using apt..."
-        apt update && apt install -y jq
-
-        echo "Obtaining staging url from hosting channel list"
-        STAGING_URL=$$(cat firebase_channels.json | jq '.result.channels[]|select(.url|contains("https://$PROJECT_ID--pr$_PR_NUMBER")) | .url' -r)
-        echo "Obtained staging url: $$STAGING_URL"
+        echo "Deployed website to $$FIREBASE_DEPLOY_URL"
 
         echo "Installing github cli (using instructions from https://github.com/cli/cli/blob/trunk/docs/install_linux.md#debian-ubuntu-linux-raspberry-pi-os-apt)..."
         apt update && apt install -y \
@@ -54,7 +39,7 @@ steps:
         PR_BODY=\
         "Visit the preview URL for this PR (updated for commit $COMMIT_SHA):
 
-        $$STAGING_URL"
+        $$FIREBASE_DEPLOY_URL"
 
         gh pr comment $_PR_NUMBER --edit-last --body "$$PR_BODY" --repo $REPO_FULL_NAME || \
           gh pr comment $_PR_NUMBER --body "$$PR_BODY" --repo $REPO_FULL_NAME
