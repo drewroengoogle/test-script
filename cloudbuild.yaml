@@ -19,7 +19,7 @@ steps:
 
         echo "Deploying website to a staging channel on firebase..."
         FIREBASE_DEPLOY_RESPONSE=$(firebase hosting:channel:deploy --expires 7d pr$_PR_NUMBER-$_HEAD_BRANCH --project=$PROJECT_ID)
-        echo $FIREBASE_DEPLOY_RESPONSE
+        echo $$FIREBASE_DEPLOY_RESPONSE
 
         # echo "Saving list of channels to a local file..."
         # firebase use default
