@@ -35,3 +35,4 @@ timeout: 1200s
 logsBucket: gs://github_staging_logs
 options:
   logging: GCS_ONLY
+  automapSubstitutions: true
