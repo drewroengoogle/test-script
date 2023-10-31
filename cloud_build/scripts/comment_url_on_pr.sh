@@ -19,17 +19,17 @@ comment_url_on_pr() {
     PR_BODY=\
     "Visit the preview URL for this PR (updated for commit $COMMIT_SHA):
 
-    $(cat FIREBASE_STAGING_URL)"
+    $(cat ../../FIREBASE_STAGING_URL)"
 
     gh pr comment $_PR_NUMBER --edit-last --body "$$PR_BODY" --repo $REPO_FULL_NAME || \
     gh pr comment $_PR_NUMBER --body "$$PR_BODY" --repo $REPO_FULL_NAME
 }
 
 echo "Installing github cli (using instructions from https://github.com/cli/cli/blob/trunk/docs/install_linux.md#debian-ubuntu-linux-raspberry-pi-os-apt)..."
-download_github_cli
+# download_github_cli
 
 echo "Logging into github under bot account..."
-log_into_github_account
+# log_into_github_account
 
 echo "Commenting staging url on PR..."
 comment_url_on_pr
