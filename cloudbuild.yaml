@@ -35,7 +35,7 @@ steps:
         apt update && apt install -y jq
 
         echo "Obtaining staging url from hosting channel list"
-        STAGING_URL=$$(cat firebase_channels.json | jq '.result.channels[]|select(.url|contains("https://$PROJECT_ID--pr$_PR_NUMBER)) | .url' -r)
+        STAGING_URL=$$(cat firebase_channels.json | jq '.result.channels[]|select(.url|contains("https://$PROJECT_ID--pr$_PR_NUMBER")) | .url' -r)
         echo "Obtained staging url: $$STAGING_URL"
 
         echo "Installing github cli (using instructions from https://github.com/cli/cli/blob/trunk/docs/install_linux.md#debian-ubuntu-linux-raspberry-pi-os-apt)..."
