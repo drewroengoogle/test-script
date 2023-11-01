@@ -19,7 +19,7 @@ steps:
 
         echo "Deploying website to a staging channel on firebase..."
         FIREBASE_DEPLOY_RESPONSE=$(firebase hosting:channel:deploy --expires 7d pr$_PR_NUMBER-$_HEAD_BRANCH --project=$PROJECT_ID)
-        FIREBASE_STAGING_URL=$(echo $$FIREBASE_DEPLOY_RESPONSE | grep -Eo "https://drewroen-sandbox--[a-zA-Z0-9./?=_%:-]*")
+        FIREBASE_STAGING_URL=$(echo $$FIREBASE_DEPLOY_RESPONSE | grep -Eo "https://$PROJECT_ID--[a-zA-Z0-9./?=_%:-]*")
 
         echo "Logging into github under bot account..."
         echo $$GH_PAT_TOKEN > token
@@ -36,7 +36,7 @@ steps:
     secretEnv: ['GH_PAT_TOKEN']
 availableSecrets:
   secretManager:
-  - versionName: projects/drewroen-sandbox/secrets/gh_token_comment/versions/latest
+  - versionName: projects/$PROJECT_ID/secrets/gh_token_comment/versions/latest
     env: 'GH_PAT_TOKEN'
 timeout: 1200s
 options:
