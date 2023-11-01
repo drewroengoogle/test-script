@@ -23,14 +23,14 @@ steps:
         echo "Deployed website to $(cat FIREBASE_STAGING_URL)"
   - name: gcr.io/cloud-builders/gcloud
     entrypoint: '/bin/bash'
-    args: ['cloud_build/scripts/comment_url_on_pr.sh']
+    args: ['cloud_build/scripts/comment_url_on_pr.sh', '$(cat FIREBASE_STAGING_URL)']
     secretEnv: ['GH_PAT_TOKEN']
 availableSecrets:
   secretManager:
   - versionName: projects/drewroen-sandbox/secrets/gh_token_comment/versions/latest
     env: 'GH_PAT_TOKEN'
 timeout: 1200s
-logsBucket: gs://github_staging_logs
+logsBucket: gs://test-drew/public
 options:
   logging: GCS_ONLY
   automapSubstitutions: true
