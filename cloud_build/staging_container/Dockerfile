@@ -17,6 +17,3 @@ RUN apt-get update
 RUN apt-get install nodejs -y
 
 RUN npm install -g firebase-tools
-
-# RUN gh
-# RUN firebase
