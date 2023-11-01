@@ -10,6 +10,8 @@ PROJECT_ID=$3
 COMMIT_SHA=$4
 REPO_FULL_NAME=$5
 
+echo $PR_NUMBER
+
 firebase hosting:channel:deploy --expires 7d pr$PR_NUMBER-$HEAD_BRANCH --project=$PROJECT_ID
 FIREBASE_DEPLOY_RESPONSE=$(firebase hosting:channel:deploy --expires 7d pr$PR_NUMBER-$HEAD_BRANCH --project=$PROJECT_ID)
 FIREBASE_STAGING_URL=$(echo $$FIREBASE_DEPLOY_RESPONSE | grep -Eo "https://$PROJECT_ID--[a-zA-Z0-9./?=_%:-]*")

@@ -12,7 +12,10 @@ steps:
   #       make build BUILD_CONFIGS=_config.yml,_config_stage.yml
   - name: gcr.io/$PROJECT_ID/firebase-staging
     entrypoint: '/bin/bash'
-    args: ['cloud_build/scripts/stage_site_and_comment_on_github.sh', '$_PR_NUMBER', '$_HEAD_BRANCH', '$PROJECT_ID', '$COMMIT_SHA', '$REPO_FULL_NAME']
+    args:
+      - '-c'
+      - |-
+        cloud_build/scripts/stage_site_and_comment_on_github.sh $_PR_NUMBER $_HEAD_BRANCH $PROJECT_ID $COMMIT_SHA $REPO_FULL_NAME
     secretEnv: ['GH_PAT_TOKEN']
 availableSecrets:
   secretManager:
