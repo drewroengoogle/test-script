@@ -4,6 +4,10 @@ set -e
 ls
 
 echo "Deploying website to a staging channel on firebase..."
+echo $_PR_NUMBER
+echo $_HEAD_BRANCH
+echo $PROJECT_ID
+firebase hosting:channel:deploy --expires 7d pr$_PR_NUMBER-$_HEAD_BRANCH --project=$PROJECT_ID
 FIREBASE_DEPLOY_RESPONSE=$(firebase hosting:channel:deploy --expires 7d pr$_PR_NUMBER-$_HEAD_BRANCH --project=$PROJECT_ID)
 FIREBASE_STAGING_URL=$(echo $$FIREBASE_DEPLOY_RESPONSE | grep -Eo "https://$PROJECT_ID--[a-zA-Z0-9./?=_%:-]*")
 
