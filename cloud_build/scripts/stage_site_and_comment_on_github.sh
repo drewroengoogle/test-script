@@ -18,10 +18,7 @@ login_to_github() {
 
 comment_staging_url_on_github () {
     echo "Commenting staging url on the PR..."
-    COMMENT_BODY=\
-    "Visit the preview URL for this PR (updated for commit $COMMIT_SHA):
-
-    $FIREBASE_STAGING_URL"
+    COMMENT_BODY=$(echo -e "Visit the preview URL for this PR (updated for commit $COMMIT_SHA):\n\n$FIREBASE_STAGING_URL")
 
     # The github CLI throws an error if --edit-last doesn't find a previous
     # comment, so this edits the last comment, but if it doesn't exist,
