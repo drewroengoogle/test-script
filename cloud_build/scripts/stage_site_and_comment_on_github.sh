@@ -5,6 +5,7 @@ deploy_to_firebase_staging_channel () {
     echo "Deploying website to a staging channel on firebase..."
 
     FIREBASE_DEPLOY_RESPONSE=$(firebase hosting:channel:deploy --expires 7d pr$PR_NUMBER-$HEAD_BRANCH --project=$PROJECT_ID)
+    echo "$FIREBASE_DEPLOY_RESPONSE"
     FIREBASE_STAGING_URL=$(grep -Eo "https://$PROJECT_ID--[a-zA-Z0-9./?=_%:-]*" <<< "$FIREBASE_DEPLOY_RESPONSE")
 }
 
