@@ -1,15 +1,15 @@
-# steps:
-#   - name: gcr.io/cloud-builders/git
-#     args: ['submodule', 'update', '--init', '--recursive']
-#   - name: gcr.io/cloud-builders/docker
-#     entrypoint: '/bin/bash'
-#     args:
-#       - '-c'
-#       - |-
-#         set -e
+steps:
+  # - name: gcr.io/cloud-builders/git
+  #   args: ['submodule', 'update', '--init', '--recursive']
+  # - name: gcr.io/cloud-builders/docker
+  #   entrypoint: '/bin/bash'
+  #   args:
+  #     - '-c'
+  #     - |-
+  #       set -e
 
-#         echo "Building the website using a makefile..."
-#         make build BUILD_CONFIGS=_config.yml,_config_stage.yml
+  #       echo "Building the website using a makefile..."
+  #       make build BUILD_CONFIGS=_config.yml,_config_stage.yml
   - name: gcr.io/flutter-dev-230821/firebase-staging
     entrypoint: '/bin/bash'
     args:
