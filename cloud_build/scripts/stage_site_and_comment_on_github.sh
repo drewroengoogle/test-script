@@ -27,7 +27,7 @@ comment_staging_url_on_github () {
     gh pr comment $PR_NUMBER --edit-last --body "$COMMENT_BODY" --repo $REPO_FULL_NAME
     STATUS=$?
     set -e
-    if [ STATUS -ne 0 ]
+    if [ $STATUS -ne 0 ]
     then
         gh pr comment $PR_NUMBER ---body "$COMMENT_BODY" --repo $REPO_FULL_NAME
     fi
