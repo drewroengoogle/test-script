@@ -22,7 +22,7 @@ echo "Commenting staging url on PR..."
 PR_BODY=\
 "Visit the preview URL for this PR (updated for commit $COMMIT_SHA):
 
-$$FIREBASE_STAGING_URL"
+$FIREBASE_STAGING_URL"
 
-gh pr comment $PR_NUMBER --edit-last --body "$$PR_BODY" --repo $REPO_FULL_NAME || \
-    gh pr comment $PR_NUMBER --body "$$PR_BODY" --repo $REPO_FULL_NAME
+gh pr comment $PR_NUMBER --edit-last --body "$PR_BODY" --repo $REPO_FULL_NAME || \
+    gh pr comment $PR_NUMBER --body "$PR_BODY" --repo $REPO_FULL_NAME
