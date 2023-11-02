@@ -17,6 +17,12 @@ steps:
       - |-
         cloud_build/scripts/stage_site_and_comment_on_github.sh
     secretEnv: ['GH_PAT_TOKEN']
+    env:
+      - 'PR_NUMBER=$_PR_NUMBER'
+      - 'HEAD_BRANCH=$_HEAD_BRANCH'
+      - 'PROJECT_ID=$PROJECT_ID'
+      - 'COMMIT_SHA=$COMMIT_SHA'
+      - 'REPO_FULL_NAME=$REPO_FULL_NAME'
 availableSecrets:
   secretManager:
   - versionName: projects/$PROJECT_ID/secrets/gh_token_comment/versions/latest
@@ -24,9 +30,3 @@ availableSecrets:
 timeout: 1200s
 options:
   logging: CLOUD_LOGGING_ONLY
-  env:
-    - 'PR_NUMBER=$_PR_NUMBER'
-    - 'HEAD_BRANCH=$_HEAD_BRANCH'
-    - 'PROJECT_ID=$PROJECT_ID'
-    - 'COMMIT_SHA=$COMMIT_SHA'
-    - 'REPO_FULL_NAME=$REPO_FULL_NAME'
