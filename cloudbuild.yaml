@@ -1,21 +1,21 @@
-steps:
-  # - name: gcr.io/cloud-builders/git
-  #   args: ['submodule', 'update', '--init', '--recursive']
-  # - name: gcr.io/cloud-builders/docker
-  #   entrypoint: '/bin/bash'
-  #   args:
-  #     - '-c'
-  #     - |-
-  #       set -e
+# steps:
+#   - name: gcr.io/cloud-builders/git
+#     args: ['submodule', 'update', '--init', '--recursive']
+#   - name: gcr.io/cloud-builders/docker
+#     entrypoint: '/bin/bash'
+#     args:
+#       - '-c'
+#       - |-
+#         set -e
 
-  #       echo "Building the website using a makefile..."
-  #       make build BUILD_CONFIGS=_config.yml,_config_stage.yml
-  - name: gcr.io/$PROJECT_ID/firebase-staging
+#         echo "Building the website using a makefile..."
+#         make build BUILD_CONFIGS=_config.yml,_config_stage.yml
+  - name: gcr.io/flutter-dev-230821/firebase-staging
     entrypoint: '/bin/bash'
     args:
       - '-c'
       - |-
-        cloud_build/scripts/stage_site_and_comment_on_github.sh $_PR_NUMBER $_HEAD_BRANCH $PROJECT_ID $COMMIT_SHA $REPO_FULL_NAME $$GH_PAT_TOKEN
+        cloud_build/scripts/stage_site_and_comment_on_github.sh
     secretEnv: ['GH_PAT_TOKEN']
 availableSecrets:
   secretManager:
@@ -24,3 +24,9 @@ availableSecrets:
 timeout: 1200s
 options:
   logging: CLOUD_LOGGING_ONLY
+  env:
+    - 'PR_NUMBER=$_PR_NUMBER'
+    - 'HEAD_BRANCH=$_HEAD_BRANCH'
+    - 'PROJECT_ID=$PROJECT_ID'
+    - 'COMMIT_SHA=$COMMIT_SHA'
+    - 'REPO_FULL_NAME=$REPO_FULL_NAME'
