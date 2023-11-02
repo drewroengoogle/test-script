@@ -9,20 +9,13 @@ HEAD_BRANCH=$2
 PROJECT_ID=$3
 COMMIT_SHA=$4
 REPO_FULL_NAME=$5
+GH_PAT_TOKEN=$6
 
-echo $PR_NUMBER
-
-echo "deploying1"
-firebase hosting:channel:deploy --expires 7d pr$PR_NUMBER-$HEAD_BRANCH --project=$PROJECT_ID
-echo "deploying2"
 FIREBASE_DEPLOY_RESPONSE=$(firebase hosting:channel:deploy --expires 7d pr$PR_NUMBER-$HEAD_BRANCH --project=$PROJECT_ID)
-echo "deploying3"
-echo "---"
-grep
-FIREBASE_STAGING_URL=$(echo $$FIREBASE_DEPLOY_RESPONSE | grep -Eo "https://$PROJECT_ID--[a-zA-Z0-9./?=_%:-]*")
+FIREBASE_STAGING_URL=$(echo $FIREBASE_DEPLOY_RESPONSE | grep -Eo "https://$PROJECT_ID--[a-zA-Z0-9./?=_%:-]*")
 
 echo "Logging into github under bot account..."
-echo $$GH_PAT_TOKEN > token
+echo $GH_PAT_TOKEN > token
 gh auth login --with-token < token
 
 echo "Commenting staging url on PR..."
