@@ -23,14 +23,8 @@ comment_staging_url_on_github () {
     # The github CLI throws an error if --edit-last doesn't find a previous
     # comment, so this edits the last comment, but if it doesn't exist,
     # leave a new comment.
-    set +e
-    gh pr comment $PR_NUMBER --edit-last --body "$COMMENT_BODY" --repo $REPO_FULL_NAME
-    STATUS=$?
-    set -e
-    if [ $STATUS -ne 0 ]
-    then
-        gh pr comment $PR_NUMBER ---body "$COMMENT_BODY" --repo $REPO_FULL_NAME
-    fi
+    gh pr comment $PR_NUMBER --edit-last --body "$COMMENT_BODY" --repo $REPO_FULL_NAME || \
+        gh pr comment $PR_NUMBER --body "$COMMENT_BODY" --repo $REPO_FULL_NAME
 }
 
 deploy_to_firebase_staging_channel
