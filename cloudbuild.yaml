@@ -15,7 +15,7 @@ steps:
     args:
       - '-c'
       - |-
-        cloud_build/scripts/stage_site_and_comment_on_github.sh $_PR_NUMBER $_HEAD_BRANCH $PROJECT_ID $COMMIT_SHA $REPO_FULL_NAME $GH_PAT_TOKEN
+        cloud_build/scripts/stage_site_and_comment_on_github.sh $_PR_NUMBER $_HEAD_BRANCH $PROJECT_ID $COMMIT_SHA $REPO_FULL_NAME $$GH_PAT_TOKEN
     secretEnv: ['GH_PAT_TOKEN']
 availableSecrets:
   secretManager:
