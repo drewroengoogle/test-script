@@ -2,10 +2,7 @@
 set -e
 
 deploy_to_firebase_staging_channel () {
-    echo "Deploying website to a staging channel on firebase..."
 
-    FIREBASE_DEPLOY_RESPONSE=$(firebase hosting:channel:deploy --expires 7d pr$PR_NUMBER-$HEAD_BRANCH --project=$PROJECT_ID)
-    FIREBASE_STAGING_URL=$(grep -Eo "https://$PROJECT_ID--[a-zA-Z0-9./?=_%:-]*" <<< "$FIREBASE_DEPLOY_RESPONSE")
 }
 
 login_to_github() {
@@ -28,6 +25,11 @@ comment_staging_url_on_github () {
     gh pr comment $PR_NUMBER --edit-last --body "$PR_BODY" --repo $REPO_FULL_NAME || \
         gh pr comment $PR_NUMBER --body "$PR_BODY" --repo $REPO_FULL_NAME
 }
+
+echo "Deploying website to a staging channel on firebase..."
+
+FIREBASE_DEPLOY_RESPONSE=$(firebase hosting:channel:deploy --expires 7d pr$PR_NUMBER-$HEAD_BRANCH --project=$PROJECT_ID)
+FIREBASE_STAGING_URL=$(grep -Eo "https://$PROJECT_ID--[a-zA-Z0-9./?=_%:-]*" <<< "$FIREBASE_DEPLOY_RESPONSE")
 
 deploy_to_firebase_staging_channel
 login_to_github
